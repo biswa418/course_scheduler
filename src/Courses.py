@@ -7,33 +7,40 @@ class Courses:
         self.courses = {}
 
     # add new course
-    def add_course(self, listDetails):
-        [inputValid, newDetails] = courseValid(listDetails)  # data validation
+    def addCourse(self, listDetails):
+        [inputValid, newDetails] = courseValid(listDetails)
 
         if not inputValid:
             print("INPUT_DATA_ERROR")
             return
 
-        newCourse = Course(newDetails)  # add new course
-        courseId = (
-            "OFFERING-" + newCourse.title + "-" + newCourse.instructor
-        )  # unique course ID
+        newCourse = Course(newDetails)
+        courseId = "OFFERING-" + newCourse.title + "-" + newCourse.instructor
 
-        # check if course exist
-        if hasattr(self.courses, courseId):
+        if courseId in self.courses:
             print("INPUT_DATA_ERROR")
         else:
             self.courses[courseId] = newCourse
             print(courseId)
-            # newCourse.printNice() ---------------------- DELETE AFTER DONE
 
     # register a course
-    def regCourse(self):
-        if self.currEmp == self.maxEmp:
-            return "COURSE_FULL_ERROR"
+    def regCourse(self, courseDetails):
+        [email, courseId] = courseDetails
+        name = email.split("@")[0]
+
+        if courseId in self.courses:
+            currCourse = self.courses[courseId]
+            isSeatAvail = currCourse.checkSeat()
+
+            if isSeatAvail:
+                print("REG_COURSE-" + name + "-" + currCourse.title + ' ACCEPTED')
+                currCourse.regEmps.append(email)
+            else:
+                print('COURSE_FULL_ERROR')
+
         else:
-            currEmp += 1
-            return "ACCEPTED"
+            print("INPUT_DATA_ERROR")
+            return
 
     # cancel a course
     def cancelCourse(self):

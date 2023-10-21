@@ -15,7 +15,10 @@ def main():
             
             match command:
                 case 'ADD-COURSE-OFFERING':
-                    courses.add_course(line.split(' ')[1::])
+                    courses.addCourse(line.split(' ')[1::])
+
+                case 'REGISTER':
+                    courses.regCourse(line.split(' ')[1::])
              
     
 if __name__ == "__main__":
