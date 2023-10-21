@@ -1,25 +1,15 @@
 from sys import argv
+import sys
 from src.Courses import Courses
+from parseMain import parseLine
 
 def main():
     if len(argv) != 2:
         raise Exception("File path not entered")
     
-    file_path = argv[1]
+    file_path = sys.argv[1]
     courses = Courses()
-    
-    with open(file_path, 'r') as readLine:
-        for i in readLine:
-            line = i.rstrip()
-            command = line.split(' ')[0]
-            
-            match command:
-                case 'ADD-COURSE-OFFERING':
-                    courses.addCourse(line.split(' ')[1::])
-
-                case 'REGISTER':
-                    courses.regCourse(line.split(' ')[1::])
-             
+    parseLine(file_path, courses) #read command and send
     
 if __name__ == "__main__":
     main()
