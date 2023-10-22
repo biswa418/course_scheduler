@@ -8,11 +8,13 @@ class Courses:
         self.courses = {}
         self.printHelp = PrintHelper()
 
-    def setValue(self, key, value) -> None:
-        self.courses[key] = value
+    def setValue(self, key, value, courses="courses") -> None:
+        course = getattr(self, courses)
+        course[key] = value
+        setattr(self, courses, course)
 
-    def getValue(self, attr) -> any:
-        return self.courses[attr]
+    def getValue(self, attr, courses="courses") -> any:
+        return getattr(self, courses)[attr]
 
     def get(self) -> dict:
         return self.courses
